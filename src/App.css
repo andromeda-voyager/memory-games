@@ -1,5 +1,11 @@
 .App {
   text-align: center;
+  background-color: #393141;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .App-logo {
@@ -14,13 +20,6 @@
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
   color: white;
 }
 
@@ -35,4 +34,62 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.square {
+  border-bottom: 4px solid black;
+  border-right:  4px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 5vmin;
+}
+
+.instructions {
+  font-size: 4vmin;
+}
+
+.timer-wrapper {
+  width:70vw;
+  max-width: 65vh;
+  height: 12vmin;
+  margin-bottom:10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color:white;
+  font-size: 5.5vmin;
+}
+
+.timer {
+  padding-top:5px;
+}
+
+.square:hover {
+  cursor:pointer;
+}
+
+.grid {
+  border-top: 4px solid black;
+  border-left: 4px solid black;
+  display: grid;
+  height:70vw;
+  width:70vw;
+  max-width: 65vh;
+  max-height:65vh;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+button {
+  margin-top: 20px;
+  cursor: pointer;
+  padding: 2.5vmin;
+  font-size: 3vmin;
+  border: .5vmin solid black;
+  border-radius: 5px;
+  color:white;
 }

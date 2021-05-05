@@ -1,0 +1,18 @@
+.number {
+    color: rgb(0, 0, 0);
+    user-select: none;
+}
+
+.sequence .color {
+    background-color: rgb(124, 36, 207);
+}
+
+.sequence .grid {
+    background-color: rgb(50, 57, 59);
+    grid-template-columns: repeat(6, auto);
+    grid-template-rows: repeat(6, auto);
+}
+
+.sequence button {
+    background-color: rgb(77, 13, 114);
+}
