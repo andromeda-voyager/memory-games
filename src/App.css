@@ -4,8 +4,37 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+}
+
+.content {
+  min-height: calc(100vh - 65px);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+
+nav {
+  height:60px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+nav button {
+  border:none;
+  height:100%;
+  padding: 10px;
+  margin: 0 20px 0 20px;
+  background-color: transparent;
+  color:white;
+  cursor: pointer;
+  font-size: 2.5vmin;
+}
+
+nav button:hover {
+  transform: scale(1.2);
 }
 
 .App-logo {
@@ -84,12 +113,12 @@
   visibility: hidden;
 }
 
-button {
+.content button {
   margin-top: 20px;
   cursor: pointer;
   padding: 2.5vmin;
   font-size: 3vmin;
   border: .5vmin solid black;
-  border-radius: 5px;
+  border-radius: 8px;
   color:white;
 }

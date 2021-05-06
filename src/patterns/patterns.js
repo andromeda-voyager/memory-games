@@ -1,14 +1,14 @@
 import React from 'react'
 import random from '../utils/random.js';
 import Timer from "../shared/timer";
-import './pattern.css'
+import './patterns.css'
 
-export default class Pattern extends React.Component {
+export default class Patterns extends React.Component {
 
     constructor(props) {
         super(props);
-        this.size = this.props.rows *this.props.rows;
-        this.pattern = this.selection(this.size*.4, this.size);
+        this.size = this.props.rows * this.props.rows;
+        this.pattern = this.newPattern(this.size * .4);
         this.playerGrid = new Array(this.size).fill(false);
         this.playerCanClick = false;
         this.state = {
@@ -18,7 +18,7 @@ export default class Pattern extends React.Component {
         }
     }
 
-    selection = (patternSize) => {
+    newPattern = (patternSize) => {
         let pattern = new Array(this.size).fill(false);
         let count = 0;
         while (count < patternSize) {
@@ -81,7 +81,7 @@ export default class Pattern extends React.Component {
     }
 
     newGameOnClick() {
-        this.pattern = this.selection(20);
+        this.pattern = this.selection(this.size * .4);
         this.playerGrid = new Array(this.size).fill(false);
         this.setState({
             timer: this.props.memorizeTime,
@@ -110,10 +110,11 @@ export default class Pattern extends React.Component {
                 </div>
                 <div className='grid pattern'>
                     {squares} </div>
-                    <button 
-                     className={this.state.percentage ? undefined : 'hidden'}
-                    onClick={()=> this.newGameOnClick()}>New Game</button>
-
+                <button
+                    className={this.state.percentage ? undefined : 'hidden'}
+                    onClick={() => this.newGameOnClick()}>
+                    Reset
+                </button>
             </div>
 
         )

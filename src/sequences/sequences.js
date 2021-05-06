@@ -1,9 +1,9 @@
 import React from 'react'
-import './sequence.css'
+import './sequences.css'
 import random from '../utils/random.js';
 import Timer from "../shared/timer";
 
-export default class Sequence extends React.Component {
+export default class Sequences extends React.Component {
 
     constructor(props) {
         super(props);
@@ -78,7 +78,15 @@ export default class Sequence extends React.Component {
     }
 
     newGameOnClick() {
-        window.location.reload();
+        this.setState({
+            lastClicked: 0,
+            gameOver: false,
+            playerCanClick: false,
+            timer: this.props.memorizeTime,
+            grid: this.newSequenceGrid(9, this.size),
+            instructions: "Memorize the sequence",
+        });
+        this.timerInterval = setInterval(this.updateGame, 1000);
     }
 
     render() {
@@ -89,7 +97,7 @@ export default class Sequence extends React.Component {
                 onClick={() => this.handleOnClick(i)}
                 key={i} >
                 <span
-                    className={Math.abs(this.state.grid[i]) == 0 || (this.state.playerCanClick && this.state.grid[i] > 0 && !this.state.gameOver) ? 'number hidden' : 'number'}
+                    className={Math.abs(this.state.grid[i]) === 0 || (this.state.playerCanClick && this.state.grid[i] > 0 && !this.state.gameOver) ? 'number hidden' : 'number'}
                 >{Math.abs(this.state.grid[i])}</span>
             </div>);
         }
@@ -109,7 +117,7 @@ export default class Sequence extends React.Component {
                 <button
                     className={this.state.gameOver ? undefined : 'hidden'}
                     onClick={() => this.newGameOnClick()}>
-                    New Game
+                    Reset
                 </button>
 
             </div>
