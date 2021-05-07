@@ -3,18 +3,19 @@ import random from '../utils/random.js';
 import Timer from "../shared/timer";
 import './patterns.css'
 
+const GameStatus = Object.freeze({ "MEMORIZE": 1, "MATCH": 2, "OVER": 3 });
+
 export default class Patterns extends React.Component {
 
     constructor(props) {
         super(props);
         this.size = this.props.rows * this.props.rows;
-        this.pattern = this.newPattern(this.size * .4);
-        this.playerGrid = new Array(this.size).fill(false);
-        this.playerCanClick = false;
         this.state = {
+            gameStatus: GameStatus.MEMORIZE,
             timer: this.props.memorizeTime,
-            grid: this.pattern.slice(),
-            instructions: "Memorize the pattern",
+            patternGrid: this.newPattern(this.size * .4),
+            playerGrid: new Array(this.size).fill(false),
+            message: "Memorize the pattern",
         }
     }
 
@@ -42,76 +43,98 @@ export default class Patterns extends React.Component {
     updateTimer = () => {
         this.setState({ timer: this.state.timer - 1 });
         if (this.state.timer < 0) {
-            if (this.playerCanClick) {
+            if (this.state.gameStatus === GameStatus.MATCH) {
                 clearInterval(this.timerInterval);
-                this.playerCanClick = false;
-                this.showPercentageCorrect();
-
-            } else {
-                this.playerCanClick = true;
                 this.setState({
-                    grid: this.playerGrid.slice(),
-                    instructions: "Recreate the pattern",
+                    gameStatus: GameStatus.OVER,
+                    timer: this.props.recreateTime,
+                    message: this.getPercentageCorrect(),
+                });
+            } else {
+                this.setState({
+                    gameStatus: GameStatus.MATCH,
+                    message: "Recreate the pattern",
                     timer: this.props.recreateTime,
                 });
             }
         }
     }
 
-    showPercentageCorrect() {
+    getPercentageCorrect() {
         let numCorrect = 0;
-        for (let i = 0; i < this.pattern.length; i++) {
-            if (this.pattern[i] === this.playerGrid[i]) {
+        for (let i = 0; i < this.state.patternGrid.length; i++) {
+            if (this.state.patternGrid[i] === this.state.playerGrid[i]) {
                 numCorrect++;
             }
         }
-        this.setState({
-            instructions: "",
-            percentage: Math.floor((numCorrect / this.pattern.length) * 100) + "%"
-        });
+
+        return Math.floor((numCorrect / this.state.patternGrid.length) * 100) + "%"
+
     }
 
     handleOnClick(index) {
-        if (this.playerCanClick) {
-            this.playerGrid[index] = true;
+        if (this.state.gameStatus === GameStatus.MATCH) {
+            let modifiedGrid = this.state.playerGrid.slice();
+            modifiedGrid[index] = !modifiedGrid[index];
             this.setState({
-                grid: this.playerGrid.slice(),
+                playerGrid: modifiedGrid.slice(),
             });
         }
     }
 
     newGameOnClick() {
-        this.pattern = this.selection(this.size * .4);
-        this.playerGrid = new Array(this.size).fill(false);
         this.setState({
+            gameStatus: GameStatus.MEMORIZE,
             timer: this.props.memorizeTime,
-            grid: this.pattern.slice(),
-            instructions: "Memorize the pattern",
-            percentage: undefined,
+            patternGrid: this.newPattern(this.size * .4),
+            playerGrid: new Array(this.size).fill(false),
+            message: "Memorize the pattern",
         });
         this.timerInterval = setInterval(this.updateTimer, 1000);
     }
 
     render() {
-        let squares = [];
-        for (let i = 0; i < this.pattern.length; i++) {
-            squares.push(<div
-                className={this.state.grid[i] === true ? 'square color' : 'square'}
+        let playerSquares = [];
+        let patternSquares = [];
+        for (let i = 0; i < this.state.patternGrid.length; i++) {
+            patternSquares.push(<div
+                className={this.state.patternGrid[i] === true ? 'square color' : 'square'}
+                key={i} >
+            </div>);
+
+            playerSquares.push(<div
+                className={this.state.playerGrid[i] === true ? 'square color' : 'square'}
                 onClick={() => this.handleOnClick(i)}
                 key={i} >
             </div>);
         }
         return (
             <div className="pattern">
-                <div className="timer-wrapper">
-                    <div className="instructions">{this.state.instructions}</div>
-                    {this.state.percentage && this.state.percentage}
-                    {this.state.timer > -1 && <Timer time={this.state.timer} />}
+                <div className="timer-message-container">
+                    <div className="message">{this.state.message}</div>
+                    {this.state.timer > -1 
+                    && this.state.gameStatus !== GameStatus.OVER 
+                    && <Timer time={this.state.timer} />}
                 </div>
-                <div className='grid pattern'>
-                    {squares} </div>
+                <div className=
+                    {
+                        this.state.gameStatus !== GameStatus.OVER
+                            ? 'single grid-container' : 'double grid-container'
+                    }>
+                    {this.state.gameStatus === GameStatus.OVER && <span>Original Pattern</span>}
+                    {this.state.gameStatus !== GameStatus.MATCH &&
+                        <div className='grid pattern'>
+                            {patternSquares}
+                        </div>
+                    }
+                    {this.state.gameStatus !== GameStatus.MEMORIZE &&
+                        <div className='grid pattern'>
+                            {playerSquares}
+                        </div>
+                    }
+                </div>
                 <button
-                    className={this.state.percentage ? undefined : 'hidden'}
+                    className={this.state.gameStatus === GameStatus.OVER ? undefined : 'hidden'}
                     onClick={() => this.newGameOnClick()}>
                     Reset
                 </button>

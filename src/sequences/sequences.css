@@ -11,8 +11,10 @@
     background-color: rgb(50, 57, 59);
     grid-template-columns: repeat(6, auto);
     grid-template-rows: repeat(6, auto);
-}
-
-.sequence button {
-    background-color: rgb(86, 32, 136);
+    height:70vw;
+    width:70vw;
+    max-width: 65vh;
+    max-height:65vh;
+    min-height:320px;
+    min-width:320px;
 }

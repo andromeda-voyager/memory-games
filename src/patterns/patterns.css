@@ -3,13 +3,38 @@
     background-color: rgb(63, 189, 80);
 }
 
+.grid-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height:70vw;
+    width:70vw;
+    max-width: 65vh;
+    max-height:65vh;
+    min-height:320px;
+    min-width:320px;
+}
+
+.grid-container span {
+    color:white;
+    font-size: calc(8px + 1vmin);
+    margin-bottom:2px;
+}
+
+.double .grid {
+    margin-bottom: 30px;
+    width:40%;
+    height:40%
+}
+
+.single .grid {
+    height:100%;
+    width:100%;
+}
+
 .pattern .grid {
     background-color: rgb(120, 17, 189);
     grid-template-columns: repeat(6, auto);
     grid-template-rows: repeat(6, auto);
-}
-
-
-.pattern button {
-    background-color: rgb(86, 32, 136);
 }

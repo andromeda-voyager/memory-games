@@ -14,7 +14,7 @@ export default class Sequences extends React.Component {
             playerCanClick: false,
             timer: this.props.memorizeTime,
             grid: this.newSequenceGrid(9, this.size),
-            instructions: "Memorize the sequence",
+            message: "Memorize the sequence",
         }
     }
 
@@ -43,7 +43,7 @@ export default class Sequences extends React.Component {
             clearInterval(this.timerInterval);
             this.setState({
                 playerCanClick: true,
-                instructions: "Click the squares in sequence",
+                message: "Click the squares in sequence",
             });
 
         }
@@ -84,7 +84,7 @@ export default class Sequences extends React.Component {
             playerCanClick: false,
             timer: this.props.memorizeTime,
             grid: this.newSequenceGrid(9, this.size),
-            instructions: "Memorize the sequence",
+            message: "Memorize the sequence",
         });
         this.timerInterval = setInterval(this.updateGame, 1000);
     }
@@ -103,8 +103,8 @@ export default class Sequences extends React.Component {
         }
         return (
             <div className="sequence">
-                <div className="timer-wrapper">
-                    <div className="instructions">{!this.state.gameOver && this.state.instructions}</div>
+                <div className="timer-message-container">
+                    <div className="message">{!this.state.gameOver && this.state.message}</div>
                     {this.state.gameOver &&
                         <span>
                             {this.state.lastClicked === 9 ? "Great job!" : this.state.lastClicked + " correct"}
