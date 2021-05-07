@@ -1,5 +1,7 @@
 # Memory Games
 
+Play at https://www.matthewpotts.dev/memory-games
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
