@@ -47,7 +47,6 @@ export default class Patterns extends React.Component {
                 clearInterval(this.timerInterval);
                 this.setState({
                     gameStatus: GameStatus.OVER,
-                    timer: this.props.recreateTime,
                     message: this.getPercentageCorrect(),
                 });
             } else {
@@ -103,7 +102,7 @@ export default class Patterns extends React.Component {
             </div>);
 
             playerSquares.push(<div
-                className={this.state.playerGrid[i] === true ? 'square color' : 'square'}
+                className={this.state.playerGrid[i] === true ? 'square color player' : 'player square'}
                 onClick={() => this.handleOnClick(i)}
                 key={i} >
             </div>);
@@ -112,16 +111,15 @@ export default class Patterns extends React.Component {
             <div className="pattern">
                 <div className="timer-message-container">
                     <div className="message">{this.state.message}</div>
-                    {this.state.timer > -1 
-                    && this.state.gameStatus !== GameStatus.OVER 
-                    && <Timer time={this.state.timer} />}
+                    {this.state.gameStatus !== GameStatus.OVER && <Timer time={this.state.timer} />}
                 </div>
+                {this.state.gameStatus === GameStatus.OVER && <span>Original Pattern</span>}
+
                 <div className=
                     {
                         this.state.gameStatus !== GameStatus.OVER
                             ? 'single grid-container' : 'double grid-container'
                     }>
-                    {this.state.gameStatus === GameStatus.OVER && <span>Original Pattern</span>}
                     {this.state.gameStatus !== GameStatus.MATCH &&
                         <div className='grid pattern'>
                             {patternSquares}

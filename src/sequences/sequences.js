@@ -45,7 +45,6 @@ export default class Sequences extends React.Component {
                 playerCanClick: true,
                 message: "Click the squares in sequence",
             });
-
         }
     }
 
@@ -65,7 +64,7 @@ export default class Sequences extends React.Component {
                     modifiedGrid[index] = -modifiedGrid[index];
                     this.setState({
                         grid: modifiedGrid.slice(),
-                        gameOver: this.state.grid[index] === -9 ? true : false,
+                        gameOver: modifiedGrid[index] === -9 ? true : false,
                         lastClicked: this.state.lastClicked + 1,
                     });
                 } else {
@@ -89,16 +88,23 @@ export default class Sequences extends React.Component {
         this.timerInterval = setInterval(this.updateGame, 1000);
     }
 
+    isNumberHidden(indexValue) {
+        return Math.abs(indexValue) === 0
+            || (this.state.playerCanClick && indexValue > 0
+                && !this.state.gameOver)
+    }
+
     render() {
         let squares = [];
         for (let i = 0; i < this.state.grid.length; i++) {
             squares.push(<div
-                className={this.state.grid[i] < 1 ? 'square' : 'square color'}
+                className={(this.state.grid[i] < 1 ? 'square' : 'square color')
+                    + (this.state.playerCanClick && this.state.grid[i] > 0 ? ' player' : '')}
                 onClick={() => this.handleOnClick(i)}
                 key={i} >
-                <span
-                    className={Math.abs(this.state.grid[i]) === 0 || (this.state.playerCanClick && this.state.grid[i] > 0 && !this.state.gameOver) ? 'number hidden' : 'number'}
-                >{Math.abs(this.state.grid[i])}</span>
+                <span className={this.isNumberHidden(this.state.grid[i]) ? 'number hidden' : 'number'}>
+                    {Math.abs(this.state.grid[i])}
+                </span>
             </div>);
         }
         return (
@@ -107,9 +113,10 @@ export default class Sequences extends React.Component {
                     <div className="message">{!this.state.gameOver && this.state.message}</div>
                     {this.state.gameOver &&
                         <span>
-                            {this.state.lastClicked === 9 ? "Great job!" : this.state.lastClicked + " correct"}
+                            {this.state.lastClicked === 9 ? "Great job!"
+                                : this.state.lastClicked + " correct"}
                         </span>}
-                    {this.state.timer > -1 && <Timer time={this.state.timer} />}
+                    <Timer time={this.state.timer} />
                 </div>
                 <div className="grid">
                     {squares}

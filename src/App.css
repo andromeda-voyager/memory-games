@@ -50,10 +50,10 @@ nav button:hover {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 5vmin;
+  font-size: calc(10px + 3.5vmin);
 }
 
-.square:hover {
+.player.square:hover {
   cursor: pointer;
   opacity: .8;
 }
@@ -70,19 +70,16 @@ nav button:hover {
   justify-content: center;
   align-items: center;
   color:white;
-  font-size: calc(20px + 1vmin);
+  font-size: calc(15px + 2vmin);
 }
 
 .timer {
   margin-top:1vh;
 }
 
-.square:hover {
-  cursor: pointer;
-  opacity: .8;
-}
-
 .grid {
+  grid-template-columns: repeat(6, auto);
+  grid-template-rows: repeat(6, auto);
   border-top: 4px solid black;
   border-left: 4px solid black;
   display: grid;
@@ -98,12 +95,12 @@ button {
   padding: 15px;
   font-size: x-large;
   border: 3px solid black;
-  border-radius: 10px;
   color:white;
-  background-color: rgb(86, 32, 136);
+  background-color: transparent;
 }
 
 button:hover {
   opacity: .8;
+  transform: scale(1.1);
 }
 

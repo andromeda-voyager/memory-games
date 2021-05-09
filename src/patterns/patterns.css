@@ -1,6 +1,10 @@
 
 .pattern .color {
-    background-color: rgb(63, 189, 80);
+    background-color: rgb(57, 172, 72);
+}
+
+.pattern .player.square:hover {
+    background-color: rgb(57, 172, 72);
 }
 
 .grid-container {
@@ -14,27 +18,21 @@
     max-height:65vh;
     min-height:320px;
     min-width:320px;
+    row-gap: 20px;
 }
 
-.grid-container span {
+.pattern span {
     color:white;
     font-size: calc(8px + 1vmin);
     margin-bottom:2px;
 }
 
 .double .grid {
-    margin-bottom: 30px;
-    width:40%;
-    height:40%
+    width:50%;
+    height:50%
 }
 
 .single .grid {
     height:100%;
     width:100%;
-}
-
-.pattern .grid {
-    background-color: rgb(120, 17, 189);
-    grid-template-columns: repeat(6, auto);
-    grid-template-rows: repeat(6, auto);
 }

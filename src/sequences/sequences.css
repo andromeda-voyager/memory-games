@@ -4,13 +4,10 @@
 }
 
 .sequence .color {
-    background-color: rgb(124, 36, 207);
+    background-color: rgb(120, 50, 185);
 }
 
 .sequence .grid {
-    background-color: rgb(50, 57, 59);
-    grid-template-columns: repeat(6, auto);
-    grid-template-rows: repeat(6, auto);
     height:70vw;
     width:70vw;
     max-width: 65vh;
