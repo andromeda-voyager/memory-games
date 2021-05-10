@@ -3,7 +3,7 @@ import random from '../utils/random.js';
 import Timer from "../shared/timer";
 import './patterns.css'
 
-const GameStatus = Object.freeze({ "MEMORIZE": 1, "MATCH": 2, "OVER": 3 });
+const GameStatus = Object.freeze({ MEMORIZE: 1, MATCH: 2, OVER: 3 });
 
 export default class Patterns extends React.Component {
 
@@ -30,7 +30,7 @@ export default class Patterns extends React.Component {
             }
         }
         return pattern;
-    };
+    }
 
     componentDidMount() {
         this.timerInterval = setInterval(this.updateTimer, 1000);
@@ -66,9 +66,7 @@ export default class Patterns extends React.Component {
                 numCorrect++;
             }
         }
-
         return Math.floor((numCorrect / this.state.patternGrid.length) * 100) + "%"
-
     }
 
     handleOnClick(index) {
@@ -95,6 +93,7 @@ export default class Patterns extends React.Component {
     render() {
         let playerSquares = [];
         let patternSquares = [];
+        let playerGridClasses = this.state.gameStatus === GameStatus.MATCH ? "square player" : "square"
         for (let i = 0; i < this.state.patternGrid.length; i++) {
             patternSquares.push(<div
                 className={this.state.patternGrid[i] === true ? 'square color' : 'square'}
@@ -102,11 +101,13 @@ export default class Patterns extends React.Component {
             </div>);
 
             playerSquares.push(<div
-                className={this.state.playerGrid[i] === true ? 'square color player' : 'player square'}
+                className={this.state.playerGrid[i] === true ? playerGridClasses + " color" : playerGridClasses}
                 onClick={() => this.handleOnClick(i)}
                 key={i} >
             </div>);
         }
+        let gridContainerClass = this.state.gameStatus !== GameStatus.OVER
+            ? 'single grid-container' : 'double grid-container';
         return (
             <div className="pattern">
                 <div className="timer-message-container">
@@ -115,11 +116,7 @@ export default class Patterns extends React.Component {
                 </div>
                 {this.state.gameStatus === GameStatus.OVER && <span>Original Pattern</span>}
 
-                <div className=
-                    {
-                        this.state.gameStatus !== GameStatus.OVER
-                            ? 'single grid-container' : 'double grid-container'
-                    }>
+                <div className={gridContainerClass}>
                     {this.state.gameStatus !== GameStatus.MATCH &&
                         <div className='grid pattern'>
                             {patternSquares}
@@ -131,6 +128,7 @@ export default class Patterns extends React.Component {
                         </div>
                     }
                 </div>
+
                 <button
                     className={this.state.gameStatus === GameStatus.OVER ? undefined : 'hidden'}
                     onClick={() => this.newGameOnClick()}>
